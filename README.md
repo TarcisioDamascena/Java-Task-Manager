@@ -1,2 +1,2 @@
 # Java-Task-Manager
- Task manage API
+Api de gerenciamento de tarefas desenvolvida com Java Spring
