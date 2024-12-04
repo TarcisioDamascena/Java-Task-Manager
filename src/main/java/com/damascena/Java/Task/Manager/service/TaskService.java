@@ -1,7 +1,9 @@
 package com.damascena.Java.Task.Manager.service;
 
 import com.damascena.Java.Task.Manager.model.Task;
+import com.damascena.Java.Task.Manager.model.User;
 import com.damascena.Java.Task.Manager.repository.TaskRepository;
+import com.damascena.Java.Task.Manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
@@ -22,7 +26,11 @@ public class TaskService {
         return taskRepository.findById(id);
     }
 
-    public Task createTask(Task task) {
+    public Task createTask(Task task, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("user not found"));
+        task.setUser(user);
+
         return taskRepository.save(task);
     }
 
